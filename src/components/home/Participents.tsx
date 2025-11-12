@@ -85,7 +85,7 @@ export default function Participents() {
 
         <div className="mt-10 w-full grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-3">
           {/* Left Big Image */}
-          <div className="part-image-1 w-full rounded-2xl overflow-hidden relative">
+          <div className="part-image-1 w-full h-[400px] rounded-2xl overflow-hidden relative">
             <Image
               src={"/images/home/participents/image-1.png"}
               alt="Image"
@@ -119,7 +119,7 @@ export default function Participents() {
 
           {/* Right 2 Smaller Images */}
           <div className="w-full grid grid-cols-2 gap-3">
-            <div className="part-image-2 w-full">
+            <div className="part-image-2 w-full h-[400px] rounded-2xl overflow-hidden">
               <Image
                 src={"/images/home/participents/image-2.png"}
                 alt="Image"
@@ -128,7 +128,7 @@ export default function Participents() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="part-image-3 w-full">
+            <div className="part-image-3 w-full h-[400px] rounded-2xl overflow-hidden">
               <Image
                 src={"/images/home/participents/image-3.png"}
                 alt="Image"
