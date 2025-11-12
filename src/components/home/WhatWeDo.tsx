@@ -4,6 +4,7 @@ import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,7 @@ export default function WhatWeDo() {
   const subTitleRef = useRef<HTMLHeadingElement | null>(null);
   const descRef = useRef<HTMLParagraphElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
+  const pathname = usePathname();
 
   const data: WhatWeDoData[] = [
     {
@@ -59,49 +61,58 @@ export default function WhatWeDo() {
   ];
 
   useLayoutEffect(() => {
-    if (!titleRef.current || !subTitleRef.current || !descRef.current) return;
-
-    gsap.from(titleRef.current, {
-      opacity: 0,
-      y: -40,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: titleRef.current,
-        start: "top 85%",
-      },
-    });
-
-    gsap.from([subTitleRef.current, descRef.current], {
-      opacity: 0,
-      x: -60,
-      duration: 1,
-      ease: "power3.out",
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: subTitleRef.current,
-        start: "top 85%",
-      },
-    });
-
-    if (cardsRef.current) {
-      const cards = cardsRef.current.children;
-      gsap.from(cards, {
+    const ctx = gsap.context(() => {
+      // Title animation (from top)
+      gsap.from(titleRef.current, {
         opacity: 0,
-        x: (i: number) => (i % 2 === 0 ? -80 : 80),
-        duration: 1,
+        y: -40,
+        duration: 0.9,
         ease: "power3.out",
-        stagger: 0.15,
         scrollTrigger: {
-          trigger: cardsRef.current,
-          start: "top 85%",
+          trigger: titleRef.current,
+          start: "top 90%", // slightly earlier
+          once: true,
         },
       });
-    }
-  }, []);
+
+      // Subtitle + paragraph (from left)
+      gsap.from([subTitleRef.current, descRef.current], {
+        opacity: 0,
+        x: -60,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: subTitleRef.current,
+          start: "top 90%",
+          once: true,
+        },
+      });
+
+      // Cards (alternate directions)
+      if (cardsRef.current) {
+        const cards = cardsRef.current.children;
+        gsap.from(cards, {
+          opacity: 0,
+          x: (i: number) => (i % 2 === 0 ? -80 : 80),
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: "top 90%",
+            once: true,
+          },
+        });
+      }
+    });
+
+    // Cleanup GSAP + ScrollTriggers on unmount or route change
+    return () => ctx.revert();
+  }, [pathname]);
 
   return (
-    <section className="w-full px-[5%] sm:px-[8%] py-20 text-center">
+    <section className="w-full px-[5%] sm:px-[8%] py-20 text-center overflow-hidden">
       <div className="container mx-auto">
         <h2 ref={titleRef} className="gradient-text font-semibold text-base">
           What We Do

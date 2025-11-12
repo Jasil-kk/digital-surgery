@@ -18,7 +18,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="w-full fixed top-0 left-0 px-[5%] sm:px-[8%] py-5 z-50 text-white bg-[#ffffff0a] backdrop-blur-md">
+    <header className="w-full h-20 flex items-center fixed top-0 left-0 px-[5%] sm:px-[8%] z-50 text-white bg-[#ffffff0a] backdrop-blur-md">
       <div className="container mx-auto flex items-center justify-between gap-2">
         {/* Logo */}
         <Link href="/">
@@ -38,7 +38,8 @@ export default function Header() {
             <li className="relative group pb-1">
               <div
                 className={`flex items-center gap-2 cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-[#70CAEF] after:transition-all duration-300 ${
-                  pathname.startsWith("/businesses")
+                  pathname.startsWith("/products") ||
+                  pathname.startsWith("/solutions")
                     ? "after:w-full text-[#70CAEF] font-semibold"
                     : "after:w-0 hover:after:w-full"
                 }`}
