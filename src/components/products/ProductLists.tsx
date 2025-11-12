@@ -9,51 +9,20 @@ import ArrowButton from "../ArrowButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ProductLists() {
+interface Product {
+  image: string;
+  title: string;
+  points: string[];
+}
+
+type ProductListProps = {
+  data: Product[];
+};
+
+export default function ProductLists({ data }: ProductListProps) {
   const pathname = usePathname();
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
-
-  const products = [
-    {
-      image: "/images/products/product-1.png",
-      title: "Advanced Surgical Visualisation",
-      points: [
-        "Ultra-high-definition (4K/8K), 3D, and immersive surgical imaging systems.",
-        "Endoscopic, laparoscopic, and microscopic video solutions.",
-        "Augmented and mixed reality overlays for surgical navigation and education.",
-        "Hands-free, head-mounted imaging tools that integrate with OR workflows.",
-      ],
-    },
-    {
-      image: "/images/products/product-2.png",
-      title: "Smart Operating Room Integration",
-      points: [
-        "Digitally connected operating rooms with centralized control.",
-        "Surgical display systems with integrated recording and streaming.",
-        "Wireless data sharing and device interoperability.",
-        "Automated OR workflows to enhance efficiency and sterility.",
-      ],
-    },
-    {
-      image: "/images/products/product-3.png",
-      title: "Minimally Invasive Surgery Tools",
-      points: [
-        "High-performance laparoscopic, robotic-assisted, and endoscopic instruments.",
-        "Electrosurgical and energy-based devices for tissue manipulation and dissection.",
-        "AI-supported tools for precision and safety in complex procedures.",
-      ],
-    },
-    {
-      image: "/images/products/product-4.png",
-      title: "Medical Imaging & Diagnostics",
-      points: [
-        "Pre-operative and intraoperative imaging systems.",
-        "Real-time imaging platforms integrated with surgical tools.",
-        "AI-enhanced visualization and diagnostic tools for faster clinical decisions.",
-      ],
-    },
-  ];
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -100,7 +69,7 @@ export default function ProductLists() {
     >
       <div className="container mx-auto">
         <div ref={cardsRef} className="w-full flex flex-col gap-5">
-          {products.map((item, index) => (
+          {data.map((item, index) => (
             <div
               key={index}
               className="w-full bg-white rounded-2xl border border-[#C8DFE6] flex flex-col lg:flex-row items-start gap-5 p-5"
