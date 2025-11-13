@@ -4,11 +4,13 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Participents() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -111,7 +113,10 @@ export default function Participents() {
                   20 October 2025
                 </p>
               </div>
-              <button className="mt-2 sm:mt-5 text-[#4B7ABC] font-normal text-sm border border-[#4B7ABC] rounded-lg h-8 sm:h-10 w-[109px] cursor-pointer hover:bg-[#4B7ABC] hover:text-white transition-all">
+              <button
+                onClick={() => router.push("/media-single")}
+                className="mt-2 sm:mt-5 text-[#4B7ABC] font-normal text-sm border border-[#4B7ABC] rounded-lg h-8 sm:h-10 w-[109px] cursor-pointer hover:bg-[#4B7ABC] hover:text-white transition-all"
+              >
                 View Story
               </button>
             </div>
